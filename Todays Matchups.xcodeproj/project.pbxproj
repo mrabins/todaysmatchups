@@ -44,6 +44,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		139794C01DC46EFA00CED6BF /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				13BC5EBA1DC457FD00A5F2E4 /* ViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		13BC5EAC1DC457FD00A5F2E4 = {
 			isa = PBXGroup;
 			children = (
@@ -66,9 +74,9 @@
 			isa = PBXGroup;
 			children = (
 				13BC5ED21DC4616300A5F2E4 /* GoogleService-Info.plist */,
+				139794C01DC46EFA00CED6BF /* ViewControllers */,
 				13BC5ECA1DC4581300A5F2E4 /* Model */,
 				13BC5EB81DC457FD00A5F2E4 /* AppDelegate.swift */,
-				13BC5EBA1DC457FD00A5F2E4 /* ViewController.swift */,
 				13BC5EBC1DC457FD00A5F2E4 /* Main.storyboard */,
 				13BC5EBF1DC457FD00A5F2E4 /* Assets.xcassets */,
 				13BC5EC11DC457FD00A5F2E4 /* LaunchScreen.storyboard */,
@@ -138,6 +146,7 @@
 					13BC5EB41DC457FD00A5F2E4 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = RY4LKVN272;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};

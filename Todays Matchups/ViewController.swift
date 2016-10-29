@@ -10,18 +10,47 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
+
 class ViewController: UIViewController {
     
     var ref: FIRDatabaseReference!
     var refHandle: UInt!
     var returnedData = [DataModel]()
 
+    
+    @IBOutlet weak var pitcherImageLabel: UIImageView!
+    @IBOutlet weak var batterImageLabel: UIImageView!
+    
+    
+    // Pitcher Properties
+    @IBOutlet weak var pitcherLabel: UILabel!
+    @IBOutlet weak var pitcherTeamID: UILabel!
+    
+    // Batter Propeties
+    @IBOutlet weak var batterLabel: UILabel!
+    @IBOutlet weak var batterTeamId: UILabel!
+    
+    // Game UI Properties
+    @IBOutlet weak var inningLabel: UILabel!
+    @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var gameDate: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         ref = FIRDatabase.database().reference()
         fetchData()
+        
+        pitcherImageLabel.backgroundColor = UIColor.brown
+        batterImageLabel.backgroundColor = UIColor.darkGray
+        
+        
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: Selector(("respondToSwipeGesture:")))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.view.addGestureRecognizer(swipeRight)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,17 +68,36 @@ class ViewController: UIViewController {
                 
                 todaysMatchup.setValuesForKeys(todaysDict)
                 
+                // Game Data
+                self.inningLabel.text = todaysMatchup.inning
+                
+                self.gameDate.text = todaysMatchup.result
+                
+                // Pitcher Data
+                self.pitcherLabel.text = todaysMatchup.pitcher
+                self.pitcherTeamID.text = todaysMatchup.pitcher_team_id
+                
+                // Batter Data
+                self.batterLabel.text = todaysMatchup.batter
+                self.batterTeamId.text = todaysMatchup.batter_team_id
                 
                 self.returnedData.append(todaysMatchup)
 
-                //            DispatchQueue.main.async {
-                //                self.tableView.reloadData()
-                //            }
-                
             }
             
         })
         
+    }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        }
+            
+        
+      
+        
+                
+
     }
 
 }
