@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var resultsLabel: UILabel!
     
     @IBOutlet weak var nextIndex: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -45,7 +46,6 @@ class ViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: theSelector)
         tapGesture.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGesture)
-        
         
     }
     
@@ -63,8 +63,7 @@ class ViewController: UIViewController {
                 let todaysMatchup = DataModel()
                 
                 todaysMatchup.setValuesForKeys(todaysDict)
-                self.updateLabels(todaysMatchup: todaysMatchup)
-
+                self.updateLabels(matchup: todaysMatchup)
             }
             
         })
@@ -75,6 +74,7 @@ class ViewController: UIViewController {
     //TapGestureRecognizer
     
     func tapFunc() {
+        
         refHandle = ref.child("row").observe(.childAdded, with: {(snapshot) in
             if let todaysDict = snapshot.value as? [String: AnyObject] {
                 
@@ -82,34 +82,53 @@ class ViewController: UIViewController {
                 let todaysMatchup = DataModel()
                 
                 todaysMatchup.setValuesForKeys(todaysDict)
-                self.updateLabels(todaysMatchup: todaysMatchup)
+                self.updateLabels(matchup: todaysMatchup)
+                
+                print("I am this value \(todaysMatchup.batter)")
                 
             }
             
         })
     }
     
-    func updateLabels(todaysMatchup: DataModel) {
+    
+    func updateLabels(matchup: DataModel) {
+        
+        let todaysMatchUpNextIndex = [matchup]
+        
+        for item in todaysMatchUpNextIndex.enumerated().reversed() {
+            print("I am a new item with \(item) and \(todaysMatchUpNextIndex)")
+            
+            
+            inningLabel.text = item.element.inning
+            
+            print("NExt value is \(item.element.inning)")
+            
+            // Game Data
+            inningLabel.text = matchup.inning
+            gameDate.text = matchup.game_date
+            resultLabel.text = self.removeSpecialCharsFromString(text: matchup.result!)
+            
+            // Pitcher Data
+            pitcherLabel.text = matchup.pitcher
+            pitcherTeamID.text = matchup.pitcher_team_abbrev
+            
+            // Batter Data
+            batterLabel.text = matchup.batter
+            batterTeamId.text = matchup.batter_team_abbrev
+            
+            returnedData.append(matchup)
+            
+            print("the next inning is \(matchup.inning)")
+            
+        }
         
 
-        // Game Data
-        self.inningLabel.text = todaysMatchup.inning
-        self.gameDate.text = todaysMatchup.game_date
-        self.resultLabel.text = self.removeSpecialCharsFromString(text: todaysMatchup.result!)
-        
-        // Pitcher Data
-        self.pitcherLabel.text = todaysMatchup.pitcher
-        self.pitcherTeamID.text = todaysMatchup.pitcher_team_abbrev
-        
-        // Batter Data
-        self.batterLabel.text = todaysMatchup.batter
-        self.batterTeamId.text = todaysMatchup.batter_team_abbrev
-        
-        self.returnedData.append(todaysMatchup)
+       
         
         
    
-            }
+    }
     
     
     func removeSpecialCharsFromString(text: String) -> String {
