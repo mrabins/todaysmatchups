@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var gameDate: UILabel!
     @IBOutlet weak var resultsLabel: UILabel!
     
+    @IBOutlet weak var nextIndex: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -38,11 +39,13 @@ class ViewController: UIViewController {
         fetchData()
         
         view.backgroundColor = UIColor.gray
+
         view.isUserInteractionEnabled = true
         let theSelector : Selector = #selector(ViewController.tapFunc)
         let tapGesture = UITapGestureRecognizer(target: self, action: theSelector)
         tapGesture.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGesture)
+        
         
     }
     
@@ -60,43 +63,70 @@ class ViewController: UIViewController {
                 let todaysMatchup = DataModel()
                 
                 todaysMatchup.setValuesForKeys(todaysDict)
-                
-                // Game Data
-                self.inningLabel.text = todaysMatchup.inning
-                
-                self.gameDate.text = todaysMatchup.game_date
-                
-                
-                self.resultLabel.text = self.removeSpecialCharsFromString(text: todaysMatchup.result!)
-                
-                // Pitcher Data
-                self.pitcherLabel.text = todaysMatchup.pitcher
-                self.pitcherTeamID.text = todaysMatchup.pitcher_team_abbrev
-                
-                // Batter Data
-                self.batterLabel.text = todaysMatchup.batter
-                self.batterTeamId.text = todaysMatchup.batter_team_abbrev
-                
-                self.returnedData.append(todaysMatchup)
-                
-                
-                
+                self.updateLabels(todaysMatchup: todaysMatchup)
+
+
             }
             
         })
         
     }
     
+    
+    //TapGestureRecognizer
+    
+    func tapFunc() {
+        refHandle = ref.child("row").observe(.childAdded, with: {(snapshot) in
+            if let todaysDict = snapshot.value as? [String: AnyObject] {
+                
+                print("I am this data: TapFunction: \(todaysDict)")
+                let todaysMatchup = DataModel()
+                
+                todaysMatchup.setValuesForKeys(todaysDict)
+                self.updateLabels(todaysMatchup: todaysMatchup)
+                
+            }
+            
+        })
+    }
+    
+    func updateLabels(todaysMatchup: DataModel) {
+        
+        // Game Data
+        self.inningLabel.text = todaysMatchup.inning
+        
+        self.gameDate.text = todaysMatchup.game_date
+        
+        
+        self.resultLabel.text = self.removeSpecialCharsFromString(text: todaysMatchup.result!)
+        
+        // Pitcher Data
+        self.pitcherLabel.text = todaysMatchup.pitcher
+        self.pitcherTeamID.text = todaysMatchup.pitcher_team_abbrev
+        
+        // Batter Data
+        self.batterLabel.text = todaysMatchup.batter
+        self.batterTeamId.text = todaysMatchup.batter_team_abbrev
+        
+        self.returnedData.append(todaysMatchup)
+        
+    }
+    
+    
     func removeSpecialCharsFromString(text: String) -> String {
         let okayChars : Set <Character> = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ 1234567890".characters)
         return String(text.characters.filter {okayChars.contains($0 ) })
     }
     
-        
-        
-    }
+
+    
     
 }
+
+
+
+
+
 
 
 
