@@ -65,7 +65,6 @@ class ViewController: UIViewController {
                 todaysMatchup.setValuesForKeys(todaysDict)
                 self.updateLabels(todaysMatchup: todaysMatchup)
 
-
             }
             
         })
@@ -92,12 +91,10 @@ class ViewController: UIViewController {
     
     func updateLabels(todaysMatchup: DataModel) {
         
+
         // Game Data
         self.inningLabel.text = todaysMatchup.inning
-        
         self.gameDate.text = todaysMatchup.game_date
-        
-        
         self.resultLabel.text = self.removeSpecialCharsFromString(text: todaysMatchup.result!)
         
         // Pitcher Data
@@ -110,7 +107,9 @@ class ViewController: UIViewController {
         
         self.returnedData.append(todaysMatchup)
         
-    }
+        
+   
+            }
     
     
     func removeSpecialCharsFromString(text: String) -> String {
