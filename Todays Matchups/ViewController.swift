@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     var ref: FIRDatabaseReference!
     var refHandle: UInt!
     var returnedData = [DataModel]()
-    
     var matchUps: [DataModel] = []
     
     var currentIndex = 0
+    var completionHandler = false
     
     // Pitcher Properties
     @IBOutlet weak var pitcherLabel: UILabel!
@@ -34,8 +34,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var gameDate: UILabel!
     @IBOutlet weak var resultsLabel: UILabel!
     
-    @IBOutlet weak var nextIndex: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -43,7 +41,7 @@ class ViewController: UIViewController {
         ref = FIRDatabase.database().reference()
         fetchData()
         
-        view.backgroundColor = UIColor.gray
+        view.backgroundColor = UIColor.brown
         
         view.isUserInteractionEnabled = true
         let theSelector : Selector = #selector(ViewController.tapFunc)
@@ -51,9 +49,25 @@ class ViewController: UIViewController {
         tapGesture.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGesture)
         
-        
-        self.updateLabels(matchup: matchUps[currentIndex])
-        
+        if completionHandler == false {
+            
+            // Game Data
+            inningLabel.text = "8"
+            resultLabel.text = "Fly Ball"
+            gameDate.text = "2015-10-17"
+            
+            // Pitcher Data
+            pitcherLabel.text = "Matt Harvey"
+            pitcherTeamID.text = "Mets"
+            
+            // Batter Data
+            batterLabel.text = "Kyle Schwarber"
+            batterTeamId.text = "Cubs"
+            
+        } else {
+            self.updateLabels(matchup: matchUps[currentIndex])
+            
+        }
         
     }
     
@@ -76,17 +90,18 @@ class ViewController: UIViewController {
             }
             
         })
-        
+        if self.matchUps.isEmpty == true {
+            completionHandler = false
+        } else {
+            self.updateLabels(matchup: matchUps[currentIndex])
+        }
     }
     
-    
     //TapGestureRecognizer
-    
     func tapFunc() {
         currentIndex += 1
         self.updateLabels(matchup: matchUps[currentIndex])
     }
-    
     
     func updateLabels(matchup: DataModel) {
         
@@ -128,13 +143,3 @@ class ViewController: UIViewController {
     }
     
 }
-
-
-
-
-
-
-
-
-
-
