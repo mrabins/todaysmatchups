@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     var refHandle: UInt!
     var returnedData = [DataModel]()
     
+    var matchUps: [DataModel] = []
+    
+    var currentIndex = 0
+    
     // Pitcher Properties
     @IBOutlet weak var pitcherLabel: UILabel!
     @IBOutlet weak var pitcherTeamID: UILabel!
@@ -40,12 +44,16 @@ class ViewController: UIViewController {
         fetchData()
         
         view.backgroundColor = UIColor.gray
-
+        
         view.isUserInteractionEnabled = true
         let theSelector : Selector = #selector(ViewController.tapFunc)
         let tapGesture = UITapGestureRecognizer(target: self, action: theSelector)
         tapGesture.numberOfTapsRequired = 1
         view.addGestureRecognizer(tapGesture)
+        
+        
+        self.updateLabels(matchup: matchUps[currentIndex])
+        
         
     }
     
@@ -63,7 +71,8 @@ class ViewController: UIViewController {
                 let todaysMatchup = DataModel()
                 
                 todaysMatchup.setValuesForKeys(todaysDict)
-                self.updateLabels(matchup: todaysMatchup)
+                print("I am todays Matchup \(todaysMatchup)")
+                self.matchUps.append(todaysMatchup)
             }
             
         })
@@ -74,21 +83,8 @@ class ViewController: UIViewController {
     //TapGestureRecognizer
     
     func tapFunc() {
-        
-        refHandle = ref.child("row").observe(.childAdded, with: {(snapshot) in
-            if let todaysDict = snapshot.value as? [String: AnyObject] {
-                
-                print("I am this data: TapFunction: \(todaysDict)")
-                let todaysMatchup = DataModel()
-                
-                todaysMatchup.setValuesForKeys(todaysDict)
-                self.updateLabels(matchup: todaysMatchup)
-                
-                print("I am this value \(todaysMatchup.batter)")
-                
-            }
-            
-        })
+        currentIndex += 1
+        self.updateLabels(matchup: matchUps[currentIndex])
     }
     
     
@@ -123,11 +119,6 @@ class ViewController: UIViewController {
             
         }
         
-
-       
-        
-        
-   
     }
     
     
@@ -135,9 +126,6 @@ class ViewController: UIViewController {
         let okayChars : Set <Character> = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ 1234567890".characters)
         return String(text.characters.filter {okayChars.contains($0 ) })
     }
-    
-
-    
     
 }
 
