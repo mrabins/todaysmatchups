@@ -145,7 +145,7 @@
 				TargetAttributes = {
 					13BC5EB41DC457FD00A5F2E4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = RY4LKVN272;
+						DevelopmentTeam = E59D2Z958U;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -362,7 +362,7 @@
 			baseConfigurationReference = B8B2FB455B600D9E0F78D6C2 /* Pods-Todays Matchups.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = RY4LKVN272;
+				DEVELOPMENT_TEAM = E59D2Z958U;
 				INFOPLIST_FILE = "Todays Matchups/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "self.edu.Todays-Matchups";
@@ -376,7 +376,7 @@
 			baseConfigurationReference = C7319C4996BD2BD30376DEBC /* Pods-Todays Matchups.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = RY4LKVN272;
+				DEVELOPMENT_TEAM = E59D2Z958U;
 				INFOPLIST_FILE = "Todays Matchups/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "self.edu.Todays-Matchups";

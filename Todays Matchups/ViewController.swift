@@ -66,9 +66,7 @@ class ViewController: UIViewController {
             
         } else {
             self.updateLabels(matchup: matchUps[currentIndex])
-            
         }
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,15 +78,11 @@ class ViewController: UIViewController {
         
         refHandle = ref.child("row").observe(.childAdded, with: {(snapshot) in
             if let todaysDict = snapshot.value as? [String: AnyObject] {
-                
-                print("I am this data \(todaysDict)")
                 let todaysMatchup = DataModel()
                 
                 todaysMatchup.setValuesForKeys(todaysDict)
-                print("I am todays Matchup \(todaysMatchup)")
                 self.matchUps.append(todaysMatchup)
             }
-            
         })
         if self.matchUps.isEmpty == true {
             completionHandler = false
@@ -106,14 +100,9 @@ class ViewController: UIViewController {
     func updateLabels(matchup: DataModel) {
         
         let todaysMatchUpNextIndex = [matchup]
-        
         for item in todaysMatchUpNextIndex.enumerated().reversed() {
-            print("I am a new item with \(item) and \(todaysMatchUpNextIndex)")
-            
             
             inningLabel.text = item.element.inning
-            
-            print("NExt value is \(item.element.inning)")
             
             // Game Data
             inningLabel.text = matchup.inning
@@ -129,17 +118,11 @@ class ViewController: UIViewController {
             batterTeamId.text = matchup.batter_team_abbrev
             
             returnedData.append(matchup)
-            
-            print("the next inning is \(matchup.inning)")
-            
         }
-        
     }
-    
     
     func removeSpecialCharsFromString(text: String) -> String {
         let okayChars : Set <Character> = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ 1234567890".characters)
         return String(text.characters.filter {okayChars.contains($0 ) })
     }
-    
 }
